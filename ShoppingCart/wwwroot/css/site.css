@@ -1,0 +1,211 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+
+
+.main {
+    height: 55%;
+    width: 100%;
+    height: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.topbar {
+    width: 100%;
+    height: 5%;
+    background-color: #FF5412;
+    box-shadow: 0px 25px 40px #1687d933;
+  
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.topcaption {
+    color: #ffffff;
+    padding-Left: 100px;
+    font-family: Bahnschrift;
+}
+
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.my_img {
+    cursor: pointer;
+    width: 300px;
+
+}
+
+.my_img2 {
+    cursor: default;
+    width: 300px;
+}
+.rating_imgV {
+    padding-left: 10px;
+    cursor: pointer;
+    width: 33px;
+    
+}
+
+.rating_imgProdViewY {
+    padding-left: 10px;
+    cursor: default;
+    width: 33px;
+}
+
+.rating_imgProdViewW {
+    padding-left: 10px;
+    cursor: default;
+    width: 33px;
+    visibility: hidden;
+}
+
+.rating_imgH {
+    padding-left: 10px;
+    cursor: pointer;
+    width: 33px;
+    visibility: hidden;
+}
+.rating_col {
+
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+
+.rating_col2 {
+    padding-top:30px;
+    padding-left: 25px;
+    padding-bottom: 20px;
+}
+
+.w-15 {
+    width: 15% !important;
+}
+
+.checked {
+    color: orange;
+}
+
+.imageoverlap1 {
+    position: absolute;
+    left:230px
+    
+}
+.imageoverlap2 {
+    position: absolute;
+    left: 275px
+}
+.imageoverlap3 {
+    position: absolute;
+    left: 320px
+}
+.imageoverlap4 {
+    position: absolute;
+    left: 365px
+}
+.imageoverlap5 {
+    position: absolute;
+    left: 410px
+}
+
+.starDisplay {
+    display: flex;
+    position: relative;
+}
+
+.reviewComment {
+    color: #0384fc;
+    position: relative;
+    font-size: 20px;
+}
+
+.reviewCustName {
+    color: #7d203f;
+    position: relative;
+}
+.reviewComRow{
+
+    width : 100%;
+}
+.reviewTbl {
+    width: 100%;
+}
+
+}
+.reviewTb12 {
+    width: 100%;
+}
+
+

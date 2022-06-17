@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewData["Title"] = "Product";
+    Product product = ViewBag.product;
+    string price = String.Format("S${0:0.00}", product.Price);
+    string uploadDir = ViewBag.uploadDir;
+    Dictionary<string, int> productRating = ViewBag.productRating;
+    List<ReviewedCustomer> ReviewedCustomers = ViewBag.ReviewedCustomers;
+
+    int averageRating = productRating["average"];
+    int countOfRatings = productRating["count"];
+    
+
+}
+
+    <script type="text/javascript">
+
+        window.onload = function () {
+            let elem = document.getElementById("addtoCartBtn");
+            if (!elem) {
+                return;
+            }
+            elem.onclick = function (event) {
+               AddItemToCart("@product.ProductName")
+
+            }
+        RateStar(@averageRating)
+    }
+    </script>
+   
+<div class="text-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class=".table-borderless">
+                    <tbody>
+                        <tr>
+                            <td class="w-15">
+                                <img id="@product.ImageName" class="my_img2" src="~/Images/@product.ImageName" />
+                            </td>
+                            <td class="w-15">
+                                <h2>@product.ProductName </h2>
+                                <p>@product.Description </p> 
+                                <br>
+                                <p>
+                                    <button id ="addtoCartBtn" class="btn btn-outline-primary">
+                                        <b>$@product.Price.ToString("0.00")</b>&nbsp;&nbsp;Add To Cart
+                                    </button>                                
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="rating_col">
+
+
+                                <div class='imageoverlap1'>
+                                    <img id="star1Y" class="rating_imgProdViewW" src="@uploadDir/starYellow.png " />
+                                </div>
+                                <div class='imageoverlap1'>
+                                    <img id="star1W" class="rating_imgProdViewY" src="@uploadDir/starWhite.png" />
+                                </div>
+                                <div class='imageoverlap2'>
+                                    <img id="star2Y" class="rating_imgProdViewW" src="@uploadDir/starYellow.png" />
+                                </div>
+                                <div class='imageoverlap2'>
+                                    <img id="star2W" class="rating_imgProdViewY" src="@uploadDir/starWhite.png" />
+                                </div>
+                                <div class='imageoverlap3'>
+                                    <img id="star3Y" class="rating_imgProdViewW" src="@uploadDir/starYellow.png" />
+                                </div>
+                                <div class='imageoverlap3'>
+                                    <img id="star3W" class="rating_imgProdViewY" src="@uploadDir/starWhite.png" />
+                                </div>
+                                <div class='imageoverlap4'>
+                                    <img id="star4Y" class="rating_imgProdViewW" src="@uploadDir/starYellow.png" />
+                                </div>
+                                <div class='imageoverlap4'>
+                                    <img id="star4W" class="rating_imgProdViewY" src="@uploadDir/starWhite.png" />
+
+                                </div>
+                                <div class='imageoverlap5'>
+                                    <img id="star5Y" class="rating_imgProdViewW" src="@uploadDir/starYellow.png" />
+                                </div>
+                                <div class='imageoverlap5'>
+                                    <img id="star5W" class="rating_imgProdViewY" src="@uploadDir/starWhite.png" />
+                                </div>
+                            </td>
+                            <td>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="rating_col2">
+                                <br>
+                                <b>@averageRating</b>/5 <br>
+                                Total Ratings: <b>@countOfRatings</b>
+                            </td>
+
+                            <td>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <h3>Product Reviews</h3>
+        <hr>
+
+        <div>
+            @{
+                foreach (var customer in ReviewedCustomers)
+                {
+                    <table class="reviewTbl">
+                        <tr>
+                            <td>
+                                <p>  </p>
+                            </td>
+                        </tr>
+
+                        <tr class="reviewComRow">
+                            <td class="reviewCustName">
+                            <p>@customer.ReviewDate &emsp;&emsp; <b>@customer.FullName</b>:</p>
+                            </td>
+
+                        <tr class="reviewComRow">
+                            <td>
+                                <p class="reviewComment"><i>"@customer.ReviewComment"</i></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                }
+            }
+        </div>
+    </div>
+     
+</div>
+
+
+

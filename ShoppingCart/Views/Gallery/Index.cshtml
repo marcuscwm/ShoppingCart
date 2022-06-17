@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    List<Product> searchResult = ViewBag.SearchResult;
+    string searchInput = ViewBag.SearchInput;
+}
+
+
+@*search bar*@
+<div class="container">
+    <div class="row">
+        <form action="/Gallery/" method="post" class="col-12">
+            <input type="search" class="form-control" name="search" id="search" placeholder="Search..." value="@searchInput" />
+        </form>
+    </div>
+</div>
+
+
+@*sort products*@
+<div class="container">
+    <div class="row">
+        <form method="post" class="col-10 py-2">
+            <label class="form-check-inline">Sort by: &nbsp;</label>
+            <button type="submit" class="btn btn-link p-0" formaction="/Gallery/Index?search=@searchInput&sort=asc">Price ascending,</button>
+            <button type="submit" class="btn btn-link" formaction="/Gallery/Index?search=@searchInput&sort=desc">Price descending</button>
+        </form>
+        <div class="text-right pt-3 col-2">
+            <p>@searchResult.Count products found</p>
+        </div>
+    </div>
+</div>
+
+
+@*product list*@
+@{
+    if (searchResult.Count == 0)
+    {
+        <div class="container">
+            <div class="text-center p-5">
+                <h2>No results... :(</h2>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                @{
+                    foreach (var product in searchResult)
+                    {
+                        <div class="col-4 p-2">
+                            <div class="card">
+                                <form action="/Gallery/Product" method="post">
+                                    <button type="submit" class="btn btn-link p-0" name="productId" value="@product.Id">
+                                        <img src="~/Images/@product.ImageName" class="card-img-top" style="height: 260px" alt="...">
+                                    </button>
+                                </form>
+                                <div class="card-body">
+                                    <form action="/Gallery/Product" method="post">
+                                        <button type="submit" class="btn btn-link text-body p-0 m-0" name="productId" value="@product.Id">
+                                            <h5 class="card-title">@product.ProductName</h5>
+                                        </button>
+                                    </form>
+                                    <p class="card-text">@product.Description</p>
+                                    <button type="button" class="btn btn-outline-primary addtoCartBtn" value="@product.ProductName"><b>$@product.Price.ToString("0.00")</b>&nbsp;&nbsp;Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        let elems = document.getElementsByClassName("addtoCartBtn");
+        for (let i = 0; i < elems.length; i++) {
+            let elem = elems[i];
+            elem.addEventListener('click', OnClick)
+        }
+        function OnClick(event) {
+            let elem = event.currentTarget;
+            AddItemToCart(elem.value);
+        }
+    }
+</script>

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "New User";
+ }
+
+<style>
+/*Back ground color css*/
+    body {
+        width: 100%;
+        height: 100vh;
+        background-image: linear-gradient(lightblue, pink);
+    }
+</style>
+<br />
+<br />
+<br/>
+<h2><center>Member Registration</center></h2>
+<br />
+<form action="/Login/Newuser" method="post">
+<div style="text-align:center">
+    <div class="my_tbl">
+        <div class="my_row">
+
+            <div class="my_cell">
+                <b>Fullname </b> <input name="fullname" />
+            </div>
+        </div>
+        <br />
+
+        <div class="my_row">
+
+            <div class="my_cell">
+                <b>Username </b><input name="username" />
+            </div>
+        </div>
+        <br />
+
+        <div class="my_row">
+
+            <div class="my_cell">
+                <b>Password </b> <input name="password" type="password" />
+            </div>
+        </div>
+        <div class="my_row">
+            <div class="my_cell"></div>
+            <br />
+            <div class="my_cell" style="text-align: center">
+                <input type="submit" value="Register Member " class="btn btn-primary" id="Loginbutton" />
+                <br />
+                <br />
+
+
+
+            </div>
+        </div>
+    </div>
+    </form>

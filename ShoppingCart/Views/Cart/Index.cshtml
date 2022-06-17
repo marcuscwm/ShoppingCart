@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "View Cart";
+    string customerName = ViewBag.CurrentUserName;
+    double totalPrice = ViewBag.TotalPrice;
+    ViewData["Title"] = "Shopping Cart: " + customerName;
+    List<Product> productsinCart = ViewBag.ProductsInCart;
+    Dictionary<Product, int> countOfItems = ViewBag.CountOfItems;
+    string visible = "disabled";
+
+    if (countOfItems.Count > 0) {
+        visible = "";
+    }
+}
+
+<div class="container">
+    <h1>Welcome @(customerName)!</h1>
+    <div class="nav form-check-inline justify-content-end">
+        <form action="/Gallery/Index" method="post" style="margin-right: 1%;">
+            <button type="submit" class="btn btn-outline-primary" style="white-space:nowrap">Continue Shopping</button>
+        </form>
+        |
+        <form action="/Cart/Checkout" method="post" style="margin-left: 1%;">
+            <button id ="CheckoutbuttonTop" type="submit" class="btn btn-primary" @visible>Checkout</button>
+        </form>
+    </div>
+
+    <table id ="CartTable" class="table table-striped" style="margin-top: 3%; margin-bottom: 3%">
+
+        <thead class="thead-light">
+            <tr>
+                <th colspan="2" class="align-items-md-start">Product Details</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Total Price</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+               
+                foreach (KeyValuePair<Product, int> pair in countOfItems)                {
+                    <tr id="row.@pair.Key.ProductName" valign="middle">
+                        <td class="align-items-md-start"><img src="~/Images/@pair.Key.ImageName" alt="Alternate Text" class="rounded" style="height: 120px; width: 180px" /></td>
+                        <td class="text-left" style="word-wrap:break-word; word-break:break-word; width: 35%"><br /><b>@pair.Key.ProductName</b><br />@pair.Key.Description</td>
+                        <td class="text-center"><br /><span id="ProdPrice.@pair.Key.ProductName">$@(pair.Key.Price.ToString("0,0.00"))</span></td>
+                        <td class="text-center"><br /><span id="toatProdPrice.@pair.Key.ProductName">$@((pair.Key.Price*pair.Value).ToString("0,0.00"))</span></td>
+                        <td class="text-center">
+                            
+                                      <br />
+                                <button id ="minusbtn" onclick = "RemoveFromCart('@pair.Key.ProductName', 'valField.@pair.Key.ProductName', 'ProdPrice.@pair.Key.ProductName', 'toatProdPrice.@pair.Key.ProductName')" class="btn btn-danger" style="margin-left: 3%; margin-right: 3%">-</button>
+                                <span  id="valField.@pair.Key.ProductName" style="margin-left: 3%; margin-right: 3%">@(pair.Value)</span>
+                                <button id ="plusbtn" onclick = "AddtoCart('@pair.Key.ProductName', 'valField.@pair.Key.ProductName', 'ProdPrice.@pair.Key.ProductName', 'toatProdPrice.@pair.Key.ProductName')" class="btn btn-success" style="margin-left: 3%; margin-right: 3%">+</button>
+                                     <br />
+                                <button id ="RemoveProd" onclick = "RemoveProduct('@pair.Key.ProductName','row.@pair.Key.ProductName','valField.@pair.Key.ProductName', 'toatProdPrice.@pair.Key.ProductName')" class="btn btn-link" style="margin-left: 5%; margin-right: 5%">Remove</button>
+                            
+                        </td>
+                    </tr>                  
+                }
+            }
+        <tr class="bg-primary" style="color:white">
+            <td></td>
+            <td></td>
+            <td class="text-center"><b>TOTAL PRICE</b></td>
+            <td class="text-center"><b><span id="grandTotal">$@(totalPrice.ToString("0,0.00"))</span></b></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="nav form-check-inline justify-content-end">
+        <form action="/Gallery/Index" method="post" style="margin-right: 1%;">
+            <button type="submit" class="btn btn-outline-primary" style="white-space:nowrap">Continue Shopping</button>
+        </form>
+        |
+        <form action="/Cart/Checkout" method="post" style="margin-left: 1%;">
+            <button id ="checkoutBtnBottom" type="submit" class="btn btn-primary" @visible>Checkout</button>
+        </form>
+    </div>
+</div>

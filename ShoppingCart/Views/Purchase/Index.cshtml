@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Purchase Page";
+    List<Purchase> purchases = (List<Purchase>)ViewData["purchaseList"];
+    Dictionary<Guid, Product> productMaps = (Dictionary<Guid, Product>)ViewData["productMaps"];
+    Dictionary<Guid, ActivationCode[]> activeCodeMap = (Dictionary<Guid, ActivationCode[]>)ViewData["activeCodeMap"];
+    string customerName = ViewBag.CurrentUserName;
+}
+
+<script>
+    function toggleItems() {
+        $('.dropdown-menu').toggleClass('open');
+    }
+
+    $('.dropdown-menu li').click(function () {
+        var text = $(this).text(); // get text of the clicked item
+        $(".dropdown-toggle").text(text); // set text text to the button (dropdown)
+    });
+</script>
+
+<div class="container">
+    <h1>@(customerName)'s Purchases </h1>
+    <div class="nav form-check-inline justify-content-end">
+        <form action="/Gallery/Index" method="post" style="margin-right: 1%;">
+            <button type="submit" class="btn btn-outline-primary" style="white-space:nowrap">Continue Shopping</button>
+        </form>
+    </div>
+
+    <table class="table table-striped" style="margin-top: 3%; margin-bottom: 3%">
+
+        <thead class="thead-light">
+            <tr>
+                <th colspan="2" class="align-items-md-start">Purchase Details</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Purchased Date</th>
+                <th class="text-center">Review</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var purchase in purchases)
+                {
+                    <tr valign="baseline">
+                        <td class="centered"><img src="~/Images/@productMaps.GetValueOrDefault(purchase.Id).ImageName" alt="Alternate Text" class="rounded" style="height: 120px; width: 180px" /></td>
+                        <td class="text-left" align="center" style="word-wrap:break-word; word-break:break-word; width: 35%">
+                            <br /><b>@productMaps.GetValueOrDefault(purchase.Id).ProductName</b><br />@productMaps.GetValueOrDefault(purchase.Id).Description<br />
+                            <br /><b style="color:steelblue"><i>Activation Codes:</i></b>
+                            <br /><b>
+                                @{
+                                  ActivationCode[] activationCodes = activeCodeMap.GetValueOrDefault(purchase.Id);
+                                  if (activationCodes.Length == 1)
+                                  {
+                                      <span>@activationCodes[0].Id</span>
+                                  }
+                                  else if (activationCodes.Length > 1)
+                                  {
+                                      <select id="select" class="btn btn-info dropdown-toggle">
+                                          @{foreach (var activationCode in activationCodes)
+                                              {
+                                                 <option class="dropdown-item" style="background-color: white; text-align:left">
+                                                      @activationCode.Id
+                                                 </option>
+                                              }
+                                          }
+                                      </select>
+                                  }
+                                }
+                            </b>
+                        </td>
+                        <td class="center" align="center"><br /> @purchase.PurchaseQty </td>
+                        <td class="centered" align="center"><br /> @purchase.PurchaseDate.ToString("dd MMM yyyy")</td>
+                        <td class="text-center" align="center">
+                            <br />
+                            <form action="/Purchase/Review" method="post">
+                                <button type="submit" class="btn btn-warning" name="prodSclicked" value="@productMaps.GetValueOrDefault(purchase.Id).ProductName">How You Like It</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+

@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Dictionary<Product, int> ListItemQuantities = ViewBag.ItemQty;
+    List<Product> RandomList = ViewBag.ListOfRandomProds;
+    double totalPrice = ViewBag.TotalPrice;
+    int rewardPoints = ViewBag.Reward;
+    int additionalPoints = ViewBag.AdditionalPoint;
+    //<img src="/Images/@product.ImageName" class="card-img-top" style="height: 260px" alt="...">
+}
+<style>
+    td {
+        vertical-align: middle;
+    }
+</style>
+
+<script>
+    function UpdateCart(productName) {
+        AddItemToCart(productName);
+    }
+</script>
+
+<div class="container">
+    <div class="text-center">
+        <div style="margin-bottom:3%">
+            <h1 class="display-4">Thank you for your purchase!</h1>
+            <h3>You gained @(additionalPoints) points from this purchase. You now have @(rewardPoints) points.</h3>
+        </div>
+
+        <table style="margin:auto">
+            <tr>
+                <td>
+                    <form action="/Purchase/Index" method="post">
+                        <button class="btn btn-primary" type="submit">View My Purchases</button>
+                    </form>
+                </td>
+                <td style="padding: 0px 20px">
+                    |
+                </td>
+                <td>
+                    <form action="/Gallery/Index" method="post">
+                        <button class="btn btn-outline-primary" type="submit">Continue Shopping</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <div class="text-center">
+            <table class="table table-striped" style="margin-top: 3%; margin-bottom: 3%">
+                <thead class="thead-light">
+                    <tr>
+                        <th colspan="2" class="align-items-md-start">Product</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ foreach (KeyValuePair<Product, int> pair in ListItemQuantities)
+                        {
+                            <tr valign="middle">
+                                <td class="align-items-md-start"><img src="~/Images/@pair.Key.ImageName" alt="Alternate Text" class="rounded" style="height: 120px; width: 180px" /></td>
+                                <td class="text-left" style="word-wrap:break-word; word-break:break-word; width: 35%"><br /><b>@pair.Key.ProductName</b><br />@pair.Key.Description</td>
+                                <td class="text-center"><br />@pair.Value</td>
+                                <td class="text-center"><br />$@(pair.Key.Price.ToString("0,0.00"))</td>
+                                <td class="text-center"><br />$@((pair.Key.Price*pair.Value).ToString("0,0.00"))</td>
+                            </tr>
+                        }
+                    }
+
+                    <tr class="bg-primary align-items-md-start" style="color:white">
+                        <td colspan="3"></td>
+                        <td class="text-center"><b>TOTAL PRICE</b></td>
+                        <td class="text-center"><b>$@(totalPrice.ToString("0,0.00"))</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 3%; margin-bottom: 3%">
+            <h3>Interested in getting more? Try out the products below:</h3>
+        </div>
+
+        <div class="recos text-center">
+            <div class="row">
+                @{ foreach (var product in RandomList)
+                    {
+                        <div class="col-4 p-2">
+                            <div class="card">
+                                <form action="/Gallery/Product" method="post">
+                                    <button type="submit" class="btn btn-link p-0" name="productId" value="@product.Id">
+                                        <img src="/Images/@product.ImageName" class="card-img-top" style="height: 180px" alt="...">
+                                    </button>
+                                </form>
+                                <div class="card-body">
+                                    <form action="/Gallery/Product" method="post">
+                                        <button type="submit" class="btn btn-link text-body p-0 m-0" name="productId" value="@product.Id">
+                                            <h5 class="card-title">@product.ProductName</h5>
+                                        </button>
+                                    </form>
+                                    @*action to change to cartcontroller/addcart*@
+
+                                    <button class="btn btn-outline-primary add-to-cart" id="@product.ProductName" onclick="UpdateCart(this.id)"><b>$@product.Price.ToString("0.00")</b>&nbsp;&nbsp;Add to cart</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
